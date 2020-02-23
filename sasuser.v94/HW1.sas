@@ -2,6 +2,7 @@ libname data "/folders/myfolders/Database";
 Proc contents data = data.ptf;
 run;
 
+
 data work.ptf;
 set data.ptf;
 length age $15. default = 8;
@@ -39,21 +40,22 @@ infile cars firstobs=1 obs=10;
 input Brand:$15. Type:$15. Origin:$15. Cylinder:2. ;
 run;
 
-proc import datafile = "/folders/myfolders/Database/CA_ZIP_CODE.TXT"
-out=work.CA_ZIP_CODE;
-run;
+data work.CA_ZIP_CODE; 
+   infile '/folders/myfolders/Database/CA_ZIP_CODE.TXT' truncover firstobs=2; 
+   input Zip_Code $5. Population $6.;
+run; 
 
 
 
-/*
 data work.CA_ZIP_CODE;
-set data.CA_ZIP_CODE.TXT;
+set data.CA_ZIP_CODE;
 length density $15. default = 8;
 if (Population LE 4000) then density = "low";
 if (Population GT 4000) and (Population LE 30000) then density = "medium";
 if (Population GT 30000) then density = "high";
 run;
-*/
+
+
 
 
 
