@@ -46,9 +46,11 @@ data work.CA_ZIP_CODE;
 run; 
 
 
+proc print data=work.CA_ZIP_CODE;
+run;
 
 data work.CA_ZIP_CODE;
-set data.CA_ZIP_CODE;
+set work.ca_zip_code;
 length density $15. default = 8;
 if (Population LE 4000) then density = "low";
 if (Population GT 4000) and (Population LE 30000) then density = "medium";
@@ -75,10 +77,12 @@ run;
 
 
 libname HW1 "/folders/myfolders/Database";
-Proc contents data = data.claims;
+Proc contents data = HW1.claims;
 run;
 
-proc sort data = data.claims;
+
+
+proc sort data = HW1.claims;
 BY POLICYHOLDER_ID POLICY_STARTING_DATE;
 run;
 
@@ -87,9 +91,12 @@ BY POLICYHOLDER_ID POLICY_STARTING_DATE;
 run;
 
 data work.claims;
-merge work.ptf data.claims;
+merge work.ptf HW1.claims;
 BY POLICYHOLDER_ID POLICY_STARTING_DATE;
 run;
+
+/*end of step 4*/
+
 
 data work.claims;
 length year $15.;
